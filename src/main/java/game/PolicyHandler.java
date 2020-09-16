@@ -27,7 +27,7 @@ public class PolicyHandler{
 
             Notification noti = new Notification();
             noti.setMissionId(missionAchieved.getId());
-            noti.setStatus("MISSION ACHIEVED!");
+            noti.setMessage("MISSION ACHIEVED!");
 
             notificationRepository.save(noti);
         }
@@ -37,6 +37,12 @@ public class PolicyHandler{
 
         if(allocated.isMe()){
             System.out.println("##### listener SendMessage : " + allocated.toJson());
+
+            Notification noti = new Notification();
+            noti.setRewardId(allocated.getId());
+            noti.setMessage("REWARD ALLOCATED!");
+
+            notificationRepository.save(noti);
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
@@ -44,6 +50,13 @@ public class PolicyHandler{
 
         if(issued.isMe()){
             System.out.println("##### listener SendMessage : " + issued.toJson());
+
+            Notification noti = new Notification();
+            noti.setWalletId(issued.getId());
+            noti.setStatus(issued.getStatus());
+            noti.setMessage("WALLET ISSUED!");
+
+            notificationRepository.save(noti);
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
@@ -51,6 +64,11 @@ public class PolicyHandler{
 
         if(exchanged.isMe()){
             System.out.println("##### listener SendMessage : " + exchanged.toJson());
+
+            Notification noti = new Notification();
+            noti.setWalletId(exchanged.getId());
+            noti.setStatus(exchanged.getStatus());
+            noti.setMessage("GIFT EXCHANGED!");
         }
     }
 
