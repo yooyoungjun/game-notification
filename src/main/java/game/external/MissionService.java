@@ -12,7 +12,7 @@ import java.util.Date;
 @FeignClient(name="mission", url="${api.url.mission}", fallback = MissionServiceFallback.class)
 public interface MissionService {
 
-    @RequestMapping(method= RequestMethod.PUT, path="/missions")
+    @RequestMapping(method= RequestMethod.POST, path="/missions")
     public void updateStatus(@RequestBody Mission mission);
 
 }
