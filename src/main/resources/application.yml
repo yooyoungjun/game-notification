@@ -4,11 +4,19 @@ server:
 
 spring:
   profiles: default
+  datasource:
+    url: jdbc:mariadb://admin09-mariadb.cuy0kl2qzoel.ap-northeast-2.rds.amazonaws.com:3306/admin09_game?useUnicode=yes&characterEncoding=UTF-8
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: admin
+    password: skccadmin
   jpa:
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
       hibernate:
         show_sql: true
         format_sql: true
+        ddl-auto : create
   cloud:
     stream:
       kafka:
@@ -37,10 +45,27 @@ logging:
     org.springframework.cloud: debug
 server:
   port: 8086
+
+api:
+  url:
+    mission: http://localhost:8081
 ---
 
 spring:
   profiles: docker
+  datasource:
+    url: jdbc:mariadb://${DB_URL}/admin09_mariadb?useUnicode=yes&characterEncoding=UTF-8
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        ddl-auto : create
   cloud:
     stream:
       kafka:
@@ -62,3 +87,6 @@ spring:
         event-out:
           destination: game
           contentType: application/json
+api:
+  url:
+    mission: http://game-mission:8080

@@ -28,7 +28,8 @@ public class SentMessage extends AbstractEvent {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void sentMessage(String message) {
         this.message = message;
     }
 }
+

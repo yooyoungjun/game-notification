@@ -11,10 +11,15 @@ public class Notification {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+    @Column(name="missionId")
     private Long missionId;
+    @Column(name="rewardId")
     private Long rewardId;
+    @Column(name="walletId")
     private Long walletId;
+    @Column(name="status")
     private String status;
+    @Column(name="message")
     private String message;
 
     @PostPersist
@@ -23,6 +28,10 @@ public class Notification {
         BeanUtils.copyProperties(this, sentMessage);
         sentMessage.publishAfterCommit();
 
+        game.external.Mission mission = new game.external.Mission();
+        // mappings goes here
+        NotificationApplication.applicationContext.getBean(game.external.MissionService.class)
+                .updateStatus(mission);
 
     }
 
