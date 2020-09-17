@@ -29,10 +29,11 @@ public class Notification {
         sentMessage.publishAfterCommit();
 
         game.external.Mission mission = new game.external.Mission();
+        mission.setId(this.getMissionId());
+        mission.setStatus("Notification Complete!!");
         // mappings goes here
         NotificationApplication.applicationContext.getBean(game.external.MissionService.class)
                 .updateStatus(mission);
-
     }
 
 
