@@ -105,8 +105,8 @@ phases:
                   failureThreshold: 10
                 livenessProbe:
                   exec:
-		    command:
-		    - cat
+		            command:
+		            - cat
                     - /asd/healthy
                   initialDelaySeconds: 150
                   timeoutSeconds: 2
