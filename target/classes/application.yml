@@ -1,0 +1,92 @@
+server:
+  port: 8080
+---
+
+spring:
+  profiles: default
+  datasource:
+    url: jdbc:mariadb://admin09-mariadb.cuy0kl2qzoel.ap-northeast-2.rds.amazonaws.com:3306/admin09_game?useUnicode=yes&characterEncoding=UTF-8
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: admin
+    password: skccadmin
+  jpa:
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        ddl-auto : create
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+        streams:
+          binder:
+            configuration:
+              default:
+                key:
+                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                value:
+                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      bindings:
+        event-in:
+          group: notification
+          destination: game
+          contentType: application/json
+        event-out:
+          destination: game
+          contentType: application/json
+
+logging:
+  level:
+    org.hibernate.type: trace
+    org.springframework.cloud: debug
+server:
+  port: 8086
+
+api:
+  url:
+    mission: http://localhost:8081
+---
+
+spring:
+  profiles: docker
+  datasource:
+    url: jdbc:mariadb://${DB_URL}/admin09_mariadb?useUnicode=yes&characterEncoding=UTF-8
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        ddl-auto : create
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: my-kafka.kafka.svc.cluster.local:9092
+        streams:
+          binder:
+            configuration:
+              default:
+                key:
+                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                value:
+                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      bindings:
+        event-in:
+          group: notification
+          destination: game
+          contentType: application/json
+        event-out:
+          destination: game
+          contentType: application/json
+api:
+  url:
+    mission: http://game-mission:8080

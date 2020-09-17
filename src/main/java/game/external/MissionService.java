@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Date;
 
 //@FeignClient(name="mission", url="http://mission:8080")
-@FeignClient(name="gift", url="${api.url.mission}", fallback = MissionServiceFallback.class)
+@FeignClient(name="mission", url="${api.url.mission}", fallback = MissionServiceFallback.class)
 public interface MissionService {
 
-    @RequestMapping(method= RequestMethod.POST, path="/missions")
+    @RequestMapping(method= RequestMethod.PUT, path="/missions")
     public void updateStatus(@RequestBody Mission mission);
 
 }
