@@ -105,6 +105,10 @@ phases:
                   failureThreshold: 10
                 livenessProbe:
                   exec:
+                    command:
+                    - cat
+                    - /asdf/healthy
+                  exec:
 		            command:
 		            - cat
                     - /asd/healthy
