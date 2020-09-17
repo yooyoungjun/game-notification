@@ -108,10 +108,6 @@ phases:
                     command:
                     - cat
                     - /asdf/healthy
-                  exec:
-		            command:
-		            - cat
-                    - /asd/healthy
                   initialDelaySeconds: 150
                   timeoutSeconds: 2
                   periodSeconds: 5
